@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('GoogleMapsCtrl', ['$scope' , 'GoogleMapService' ,  '$cordovaGeolocation',  
+/*.controller('GoogleMapsCtrl', ['$scope' , 'GoogleMapService' ,  '$cordovaGeolocation',  
                                function($scope , GoogleMapService , $cordovaGeolocation) {
     
     var options = {timeout: 10000, enableHighAccuracy: true};
@@ -14,7 +14,7 @@ angular.module('starter.controllers', [])
         console.log("Could not get location");
     });
     
-}])
+}])*/
 
 .controller('ChatsCtrl', function($scope, Chats) {
   // With the new view caching in Ionic, Controllers are only called

@@ -9822,3 +9822,6 @@ a.button {
 
 .list-inset .item:last-child {
   margin-bottom: 1px; }
+
+.padding .list-inset {
+  border: 1px solid #777; }

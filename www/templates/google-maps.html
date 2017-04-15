@@ -1,11 +1,15 @@
 <ion-view view-title="GoogleMaps">
   <ion-content class="padding">
     <!-- ionic search bar -->
-    <div class="list list-inset">
-      <label class="item item-input">
-        <i class="icon ion-search placeholder-icon"></i>
-        <input type="text" placeholder="Digite uma nova localidade">
-      </label>
+    <div class="list">
+      <div class="item item-input-inset">
+        <label class="item-input-wrapper">
+          <input name="searchLocal" ng-model="searchLocal" type="text" placeholder="Digite uma nova localidade">
+        </label>
+        <button ng-click="applySearch(searchLocal)" class="button button-small">
+          Pesquisar
+        </button>
+      </div>
     </div>
       
     <!-- where we render the maps -->
