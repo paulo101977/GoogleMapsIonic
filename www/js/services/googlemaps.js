@@ -1,6 +1,11 @@
 angular.module('starter.services')
 .service('GoogleMapService' , function(){
     
+    var getIconPath = function(){
+        console.log(Request.ApplicationPath)
+        return "img/man-walking-128.png";
+    }
+    
     /* setup the google map */
     this.initMap = function(_scope,position){
         
@@ -26,6 +31,7 @@ angular.module('starter.services')
         
     }
     
+    //add the initial marker
     this.addInitialMarker = function(_scope){
         //Wait until the map is loaded
         google.maps.event.addListenerOnce(_scope.map, 'idle', function(){
@@ -34,6 +40,7 @@ angular.module('starter.services')
               map: _scope.map,
               animation: google.maps.Animation.BOUNCE,
               position: _scope.latLng,
+              icon: getIconPath(),
               label: 'Você está aqui:',
               title: 'Você está aqui:'
           });      
@@ -41,6 +48,7 @@ angular.module('starter.services')
         });
     }
     
+    //travel to point in map
     this.travelTo = function(_scope, stringToTravel){
         var geocoder = new google.maps.Geocoder();
         geocoder.geocode( { 'address': stringToTravel}, function(results, status) {
@@ -58,6 +66,7 @@ angular.module('starter.services')
             var marker = new google.maps.Marker({
                 map: _scope.map,
                 animation: google.maps.Animation.BOUNCE,
+                icon: getIconPath(),
                 position: results[0].geometry.location,
                 title: results[0].formatted_address
             });
