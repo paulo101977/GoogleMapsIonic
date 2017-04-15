@@ -40,4 +40,55 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
     width: 100%;
 }
 
+//custom modal effect
+//fade-in Animation
+.fade-in {
+  -webkit-transform: scale(0.0);
+  transform: scale(0.0);
+  opacity: 0;
+}
+.fade-in.ng-enter, .fade-in > .ng-enter {
+  -webkit-transition: all cubic-bezier(0.1, 0.7, 0.1, 1) 250ms;
+  transition: all cubic-bezier(0.1, 0.7, 0.1, 1) 250ms;
+}
+.fade-in.ng-enter-active,
+.fade-in > .ng-enter-active {
+  -webkit-transform: scale(1.0);
+  transform: scale(1.0);
+  opacity: 1;
+}
+
+.fade-in.ng-leave, .fade-in > .ng-leave {
+  -webkit-transition: all ease-in-out 250ms;
+  transition: all ease-in-out 250ms;
+}
+
+.modal{
+    display: block;
+    position: absolute;
+    top: 25%;
+    left: 10%;
+    z-index: 10;
+    overflow: hidden;
+    height: 40%;
+    width: 80%;
+    background-color: #fff;
+    min-height: 0px;
+    border-radius: 20%;
+}
+
+.modal-backdrop-bg {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.modal .list{
+    position: relative;
+    height: 35vh;
+}
+
+.button-bottom{
+    position: absolute;
+    bottom: 0px;
+    border-radius: 20%;
+}
 

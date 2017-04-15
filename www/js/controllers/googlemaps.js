@@ -1,6 +1,11 @@
 angular.module('starter.controllers')
-.controller('GoogleMapsCtrl', ['$scope' , 'GoogleMapService' ,  '$cordovaGeolocation',  
-function($scope , GoogleMapService , $cordovaGeolocation) {
+.controller('GoogleMapsCtrl', 
+//inject any instance
+['$scope' , 'GoogleMapService' , 'ModalService' ,  '$cordovaGeolocation',
+function($scope , GoogleMapService , ModalService , $cordovaGeolocation) {
+    
+    //create a instance of modal
+    ModalService.appendModal($scope);
     
     //setup the geolocation
     var options = {timeout: 10000, enableHighAccuracy: true};
@@ -13,6 +18,15 @@ function($scope , GoogleMapService , $cordovaGeolocation) {
     }, function(error){
         console.log("Could not get location");
     });
+                               
+
+    $scope.openModal = function() {
+      $scope.modal.show();
+    };
+
+    $scope.closeModal = function() {
+      $scope.modal.hide();
+    };
                                    
     //local to search                            
     $scope.searchLocal = "";
@@ -23,12 +37,12 @@ function($scope , GoogleMapService , $cordovaGeolocation) {
         console.log("local" , searchLocal);
         
         if(!searchLocal){ 
-            showTooltip("Houve um erro inesperado. Por favor tente novamente");
+            $scope.openModal();
             return;
         }
         
         if(searchLocal.length == 0){
-            showTooltip("O campo de localidade não pode ser vazio.");
+            $scope.openModal();
             return;
         }
         
