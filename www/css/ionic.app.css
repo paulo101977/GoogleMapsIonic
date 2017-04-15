@@ -9825,3 +9825,6 @@ a.button {
 
 .padding .list-inset {
   border: 1px solid #777; }
+
+.item-input-wrapper input {
+  width: 100%; }

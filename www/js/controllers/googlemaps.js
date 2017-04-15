@@ -2,7 +2,7 @@ angular.module('starter.controllers')
 .controller('GoogleMapsCtrl', ['$scope' , 'GoogleMapService' ,  '$cordovaGeolocation',  
 function($scope , GoogleMapService , $cordovaGeolocation) {
     
-    //start the map
+    //setup the geolocation
     var options = {timeout: 10000, enableHighAccuracy: true};
                                    
     //get the initial position
@@ -18,7 +18,7 @@ function($scope , GoogleMapService , $cordovaGeolocation) {
     $scope.searchLocal = "";
     $scope.lastLocation = null; //the last search location
     
-    //set the new local
+    //set the new local on click in search button
     $scope.applySearch = function(searchLocal){
         console.log("local" , searchLocal);
         
