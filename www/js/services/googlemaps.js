@@ -1,5 +1,5 @@
 angular.module('starter.services')
-.service('GoogleMapService' , function(){
+.service('GoogleMapService' , function(LocalStorageService){
     
     //return a custom icon
     function getIconPath(){
@@ -147,6 +147,9 @@ angular.module('starter.services')
               if (results[1]) {
                 //add info to markerB
                 addInfoWindow(_scope, marker, results[1].formatted_address);
+                  
+                //append the router info to the initial marker
+                marker.routerInfo = results[1].formatted_address;
               } else {
                 //window.alert('No results found');
                 _scope.openModal("Nenhum resultado encontrado, tente novamente!");
@@ -165,7 +168,7 @@ angular.module('starter.services')
     }
     
     //travel to point in map
-    this.travelTo = function(_scope, stringToTravel){
+    this.travelTo = function(_rootScope, _scope, stringToTravel){
         
         //get the geocoder to convert the location string in position
         var geocoder = new google.maps.Geocoder(),
@@ -206,7 +209,17 @@ angular.module('starter.services')
             //trace the route from pointA to pointB
             calculateAndDisplayRoute(_scope,directionsService, directionsDisplay, pointA, pointB);
               
+            //append the router info to the marker
+            markerB.routerInfo = results[0].formatted_address;
+              
             _scope.lastLocation = markerB;//last travel
+            
+            //after add new router, enable save
+            _scope.couldSave = true;
+              
+             //automatic save the last search data
+             //request save in localstorage
+             LocalStorageService.saveData(_rootScope , _scope , 'saveHistoricalLocal', false);
           } else {
             //alert('Geocode was not successful for the following reason: ' + status);
             _scope.openModal("Houve um problema ao achar sua localidade, tente novamente!");
@@ -214,63 +227,10 @@ angular.module('starter.services')
         });
     }
     
-    this.saveCurrentLocal = function(_scope){
+    this.saveCurrentLocal = function(_rootScope , _scope){
         
-        //the object localstorage dont exist
-        if(!localStorage){
-            _scope.openModal("Houve um problema ao tentar salvar sua localidade!");
-            return;
-        }
-        
-        //reset to test, comment if necessary
-        localStorage.setItem('savedLocal',"[]");
-        
-        //restore the saved local from local storage and parse the value from string
-        var value = JSON.parse(localStorage.getItem('savedLocal'));
-        
-        //first local to save
-        if(!value){
-            value = [];
-        }
-        
-        var start = _scope.initialMarker; //first marker
-        var end = _scope.lastLocation; //end marker
-        
-        if(!start){
-            _scope.openModal("Erro! Posição inicial inexistente!");
-            return;
-        }
-        
-        if(!end){
-            //_scope.openModal("Erro! Posição final inexistente!");
-            //do nothing, save initial state any way
-        }
-        
-        console.log(start)
-        
-        var latlngA = {
-              lat: parseFloat(start.position.lat()),
-              lng: parseFloat(start.position.lng())
-        };
-        
-        var latlngB = null;
-        
-        if(end){
-            latlngB = {
-              lat: parseFloat(end.position.lat()),
-              lng: parseFloat(end.position.lng())
-            }
-        }
-        
-        //store new value
-        value.push({start: latlngA, end: latlngB , newData: true});
-        
-        //save string value to restore in future
-        localStorage.setItem('savedLocal',JSON.stringify(value));
-        
-        _scope.openModal("Mapa atual salvo com sucesso!");
-        
-        console.log('savedLocal' , localStorage.getItem('savedLocal'))
+        //request save in localstorage
+        LocalStorageService.saveData(_rootScope , _scope , 'savedLocal' , true);
     }
     
 })

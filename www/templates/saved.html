@@ -1,0 +1,16 @@
+<ion-view view-title="Salvos">
+  <ion-content>
+    <ion-list>
+      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="item in allSaved  track by $index" type="item-text-wrap">
+        <img ng-src="img/Icon-Small.png">
+          <p><b>Você:</b> {{item.start.routerInfo}}</p>
+          <p ng-if="item.end"><b>Novo:</b> {{item.end.routerInfo}}</p>
+        
+        <i style="color: red;" 
+           ng-click="remove($index)"
+           class="icon ion-ios-minus-outline icon-accessory"></i>
+
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

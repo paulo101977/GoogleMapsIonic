@@ -1,20 +1,24 @@
 angular.module('starter.controllers')
 .controller('GoogleMapsCtrl', 
 //inject any instance
-['$scope' , 'GoogleMapService' , 'ModalService' ,  '$cordovaGeolocation',
-function($scope , GoogleMapService , ModalService , $cordovaGeolocation) {
+['$rootScope' , '$scope' , 'GoogleMapService' , 'ModalService' ,  '$cordovaGeolocation',
+function($rootScope , $scope , GoogleMapService , ModalService , $cordovaGeolocation) {
     
     //create a instance of modal
     ModalService.appendModal($scope);
     
     //setup the geolocation
     var options = {timeout: 10000, enableHighAccuracy: true};
+    
+    //there are nothing to be saved
+    $scope.couldSave = false;
                                    
     //get the initial position
     $cordovaGeolocation.getCurrentPosition(options)
     .then(function(position){
         GoogleMapService.initMap($scope , position);
         GoogleMapService.addInitialMarker($scope);
+        $scope.couldSave = true; //if could or not save (modal and other purpose)
     }, function(error){
         $scope.openModal("Por favor, verifique sua internet!");
     });
@@ -50,13 +54,13 @@ function($scope , GoogleMapService , ModalService , $cordovaGeolocation) {
         
         if(searchLocal){
             //showTooltip("O campo de localidade não pode ser vazio.");
-            GoogleMapService.travelTo($scope, searchLocal);
+            GoogleMapService.travelTo($rootScope , $scope, searchLocal);
             return;
         }
     }
     
     //save new local to 
     $scope.saveLocal = function(){
-        GoogleMapService.saveCurrentLocal($scope);
+        GoogleMapService.saveCurrentLocal($rootScope, $scope);
     }
 }])
