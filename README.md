@@ -18,7 +18,7 @@
 
 - bower install
 
-- ionic setub sass
+- ionic setup sass
 
 - ionic serve --lab
 
