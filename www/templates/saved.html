@@ -4,7 +4,7 @@
       <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="item in allSaved  track by $index" type="item-text-wrap">
         <img ng-src="img/Icon-Small.png">
           <p><b>Você:</b> {{item.start.routerInfo}}</p>
-          <p ng-if="item.end"><b>Novo:</b> {{item.end.routerInfo}}</p>
+          <p ng-if="item.end"><b>Para:</b> {{item.end.routerInfo}}</p>
         
         <i style="color: red;" 
            ng-click="remove($index)"

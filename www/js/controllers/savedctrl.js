@@ -16,7 +16,6 @@ angular.module('starter.controllers')
     
   //receive new data from localstorageservice
   $rootScope.$on("savedItemChange", function(event , args){
-      console.log('args' , args)
       $scope.allSaved = args.newData;
   });
 })

@@ -1,9 +1,17 @@
 <ion-view view-title="Account">
-  <ion-content>
-    <ion-list>
-    <ion-toggle  ng-model="settings.enableFriends">
-        Enable Friends
-    </ion-toggle>
-    </ion-list>
-  </ion-content>
+    <ion-content>
+        <button ng-click="clear()" class="button button-block button-positive">Limpar histórico</button>
+        <ion-list>
+          <ion-item class="item-remove-animate item-avatar item-icon-right" 
+                    ng-repeat="item in allHistory  track by $index" 
+                    type="item-text-wrap">
+            <img ng-src="img/Icon-Small.png">
+              <p><b>Você:</b> {{item.start.routerInfo}}</p>
+              <p ng-if="item.end"><b>Para:</b> {{item.end.routerInfo}}</p>
+          </ion-item>
+        </ion-list>
+        <div ng-if="!allHistory">
+            Não há histórico do mapa.
+        </div>
+    </ion-content>
 </ion-view>

@@ -19,7 +19,7 @@ angular.module('starter.services')
         
         //there are nothing to be saved
         if(!_scope.couldSave){
-            _scope.openModal("Não há nada a ser salvo. Todas as rodas já foram salvas!");
+            _scope.openModal("Não há nada a ser salvo. Todas as rotas já foram salvas!");
             return;
         }
         
