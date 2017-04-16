@@ -2,15 +2,10 @@ angular.module('starter.services')
 .service('GoogleMapService' , function(){
     
     //return a custom icon
-    var getIconPath = function(){
+    function getIconPath(){
         var image = {
             url: 'img/Icon-Small.png',
-            // This marker is 20 pixels wide by 32 pixels high.
-            size: new google.maps.Size(60, 60),
-            // The origin for this image is (0, 0).
-            //origin: new google.maps.Point(0, 0),
-            // The anchor for this image is the base of the flagpole at (0, 32).
-            //anchor: new google.maps.Point(0, 32)
+            size: new google.maps.Size(40, 40)
         };
         return image;
     }
@@ -49,6 +44,7 @@ angular.module('starter.services')
             marker.infoIsOpen = true;
         }
         
+        //new instance of the infowindow render
         var infowindow = new google.maps.InfoWindow({
           content: contentString
         });
@@ -78,7 +74,12 @@ angular.module('starter.services')
         if (status == google.maps.DirectionsStatus.OK) {
             directionsDisplay.setDirections(response);
         } else {
-          window.alert('Directions request failed due to ' + status);
+          //window.alert('Directions request failed due to ' + status);
+            
+          if(status == google.maps.DirectionsStatus.ZERO_RESULTS)
+            _scope.openModal("Nenhuma localidade encontrada, tente novamente!");
+          else
+            _scope.openModal("Houve um problema ao achar sua localidade, tente novamente!");
         }
       });
     }
@@ -98,8 +99,8 @@ angular.module('starter.services')
             zoom: 15,
             mapTypeId: google.maps.MapTypeId.ROADMAP,//map type
             mapTypeControl: false, //hide controls,
-            draggable: false,
-            zoomControl: false,
+            draggable: true,
+            zoomControl: true,
             scrollwheel: false, 
             disableDoubleClickZoom: true
         };
@@ -147,10 +148,12 @@ angular.module('starter.services')
                 //add info to markerB
                 addInfoWindow(_scope, marker, results[1].formatted_address);
               } else {
-                window.alert('No results found');
+                //window.alert('No results found');
+                _scope.openModal("Nenhum resultado encontrado, tente novamente!");
               }
             } else {
-              window.alert('Geocoder failed due to: ' + status);
+              //window.alert('Geocoder failed due to: ' + status);
+              _scope.openModal("Houve um problema ao achar sua localidade, tente novamente!");
             }
           });
             
@@ -205,9 +208,69 @@ angular.module('starter.services')
               
             _scope.lastLocation = markerB;//last travel
           } else {
-            alert('Geocode was not successful for the following reason: ' + status);
+            //alert('Geocode was not successful for the following reason: ' + status);
+            _scope.openModal("Houve um problema ao achar sua localidade, tente novamente!");
           }
         });
+    }
+    
+    this.saveCurrentLocal = function(_scope){
+        
+        //the object localstorage dont exist
+        if(!localStorage){
+            _scope.openModal("Houve um problema ao tentar salvar sua localidade!");
+            return;
+        }
+        
+        //reset to test, comment if necessary
+        localStorage.setItem('savedLocal',"[]");
+        
+        //restore the saved local from local storage and parse the value from string
+        var value = JSON.parse(localStorage.getItem('savedLocal'));
+        
+        //first local to save
+        if(!value){
+            value = [];
+        }
+        
+        var start = _scope.initialMarker; //first marker
+        var end = _scope.lastLocation; //end marker
+        
+        if(!start){
+            _scope.openModal("Erro! Posição inicial inexistente!");
+            return;
+        }
+        
+        if(!end){
+            //_scope.openModal("Erro! Posição final inexistente!");
+            //do nothing, save initial state any way
+        }
+        
+        console.log(start)
+        
+        var latlngA = {
+              lat: parseFloat(start.position.lat()),
+              lng: parseFloat(start.position.lng())
+        };
+        
+        var latlngB = null;
+        
+        if(end){
+            latlngB = {
+              lat: parseFloat(end.position.lat()),
+              lng: parseFloat(end.position.lng())
+            }
+        }
+        
+        //store new value
+        value.push({start: latlngA, end: latlngB , newData: true});
+        
+        //save string value to restore in future
+        localStorage.setItem('savedLocal',JSON.stringify(value));
+        
+        _scope.openModal("Mapa atual salvo com sucesso!");
+        
+        console.log('savedLocal' , localStorage.getItem('savedLocal'))
     }
     
 })

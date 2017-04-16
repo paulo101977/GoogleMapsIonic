@@ -6,7 +6,7 @@
         <label class="item-input-wrapper">
           <input name="searchLocal" ng-model="searchLocal" type="text" placeholder="Digite uma nova localidade">
         </label>
-        <button ng-click="applySearch(searchLocal)" class="button button-small">
+        <button ng-click="applySearch(searchLocal)" class="button button-positive button-small">
           Pesquisar
         </button>
       </div>
@@ -15,4 +15,17 @@
     <!-- where we render the maps -->
     <div id="google-maps" data-tap-disabled="true"></div>
   </ion-content>
+
+   <!-- the float button to salve route -->
+   <div class="float-button">
+     <span class="height-fix">
+       <button ng-click="saveLocal()"
+               id="fab-profile" 
+               class="button button-fab button-fab-bottom-right fab-fixed button-positive pane" 
+               nav-view="active" 
+               style="opacity: 1; transform: translate3d(0%, 0px, 0px);">
+         <i class="icon ion-plus"></i>
+       </button>
+     </span>
+   </div>
 </ion-view>

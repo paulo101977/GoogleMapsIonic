@@ -9,7 +9,12 @@ angular.module('starter.services')
           animation: 'fade-in'
         }).then(function(modal) {
           _scope.modal = modal;
-          modal.show();
+            //modal.show();
         });
+    }
+    
+    //set the modal message
+    this.setMessage = function(_scope , message){
+        _scope.message = message;
     }
 })

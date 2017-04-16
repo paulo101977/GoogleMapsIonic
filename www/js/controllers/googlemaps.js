@@ -16,15 +16,17 @@ function($scope , GoogleMapService , ModalService , $cordovaGeolocation) {
         GoogleMapService.initMap($scope , position);
         GoogleMapService.addInitialMarker($scope);
     }, function(error){
-        console.log("Could not get location");
+        $scope.openModal("Por favor, verifique sua internet!");
     });
                                
 
-    $scope.openModal = function() {
+    $scope.openModal = function(message) {
+      ModalService.setMessage($scope, message);
       $scope.modal.show();
     };
 
     $scope.closeModal = function() {
+      ModalService.setMessage($scope, "");
       $scope.modal.hide();
     };
                                    
@@ -37,12 +39,12 @@ function($scope , GoogleMapService , ModalService , $cordovaGeolocation) {
         console.log("local" , searchLocal);
         
         if(!searchLocal){ 
-            $scope.openModal();
+            $scope.openModal("Digite uma localidade a ser pesquisada!");
             return;
         }
         
         if(searchLocal.length == 0){
-            $scope.openModal();
+            $scope.openModal("Digite uma localidade a ser pesquisada!");
             return;
         }
         
@@ -52,8 +54,9 @@ function($scope , GoogleMapService , ModalService , $cordovaGeolocation) {
             return;
         }
     }
-}])
-
-function showTooltip(){
     
-}
+    //save new local to 
+    $scope.saveLocal = function(){
+        GoogleMapService.saveCurrentLocal($scope);
+    }
+}])

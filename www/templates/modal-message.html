@@ -1,8 +1,12 @@
 <ion-modal-view>
     <ion-content class="padding">
       <div class="list">
-        
-        <button class="button button-full button-positive button-bottom" ng-click="modal.hide()">Fechar</button>
+        <i class="icon ion-alert-circled positive"></i>
+        <span class="message positive">{{message}}</span>
+        <button class="button button-full button-positive button-bottom" 
+                ng-click="modal.hide()">
+            Fechar
+          </button>
       </div>
     </ion-content>
 </ion-modal-view>

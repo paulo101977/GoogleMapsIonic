@@ -9815,6 +9815,7 @@ a.button {
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
 
+/* the map */
 #google-maps {
   height: 70vh;
   width: 100%;
@@ -9848,6 +9849,7 @@ a.button {
   -webkit-transition: all ease-in-out 250ms;
   transition: all ease-in-out 250ms; }
 
+/* the modal component */
 .modal {
   display: block;
   position: absolute;
@@ -9860,15 +9862,68 @@ a.button {
   background-color: #fff;
   min-height: 0px;
   border-radius: 20%; }
+  .modal .list {
+    position: relative;
+    height: 35vh;
+    display: flex;
+    justify-content: center;
+    vertical-align: middle;
+    align-items: center;
+    flex-direction: column;
+    padding: 8%; }
+    .modal .list i {
+      display: block;
+      font-size: 40px;
+      flex: 3; }
+    .modal .list .message {
+      display: block;
+      flex: 2;
+      text-align: center;
+      max-width: 80%; }
+    .modal .list .button-bottom {
+      flex: 1;
+      border-radius: 6px; }
 
 .modal-backdrop-bg {
   background: rgba(0, 0, 0, 0.5); }
 
-.modal .list {
-  position: relative;
-  height: 35vh; }
+.item-input-wrapper {
+  background-color: white; }
 
-.button-bottom {
-  position: absolute;
-  bottom: 0px;
-  border-radius: 20%; }
+/* below, the float button css */
+.float-button {
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  /* width: 30px; */
+  padding: 12px;
+  font-size: 40px;
+  background: #387ef5;
+  position: fixed;
+  bottom: 40px;
+  /* Adjust to where you want it */
+  right: 20px;
+  /* Adjust to where you want it */
+  z-index: 9999;
+  /* ensure that is over the other components */ }
+  .float-button .height_fix {
+    margin-top: 100%; }
+  .float-button .content {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    margin-top: -20px;
+    /* Note, this must be half the font size */
+    color: #387ef5; }
+  .float-button .button-positive.activated {
+    background: #387ef5;
+    background-color: #387ef5;
+    border-color: transparent; }
+
+/* fit to ios float position on bottom */
+ion-nav-view[nav-view-transition=ios] .float-button {
+  bottom: 60px;
+  /* Adjust to where you want it */ }
