@@ -1,6 +1,147 @@
 angular.module('starter.services')
 .service('GoogleMapService' , function(LocalStorageService){
     
+    //get custom style
+    function getCustomMapStyle(){
+        return [
+          {
+            "featureType": "administrative",
+            "elementType": "geometry.fill",
+            "stylers": [
+              {
+                "color": "#7563d8"
+              }
+            ]
+          },
+          {
+            "featureType": "landscape",
+            "elementType": "geometry.fill",
+            "stylers": [
+              {
+                "color": "#465cf4"
+              }
+            ]
+          },
+          {
+            "featureType": "road.arterial",
+            "elementType": "geometry.fill",
+            "stylers": [
+              {
+                "color": "#4fb093"
+              },
+              {
+                "weight": 3.5
+              }
+            ]
+          },
+          {
+            "featureType": "road.arterial",
+            "elementType": "geometry.stroke",
+            "stylers": [
+              {
+                "color": "#0ef1f1"
+              },
+              {
+                "visibility": "on"
+              },
+              {
+                "weight": 5.5
+              }
+            ]
+          },
+          {
+            "featureType": "road.arterial",
+            "elementType": "labels.text",
+            "stylers": [
+              {
+                "visibility": "on"
+              }
+            ]
+          },
+          {
+            "featureType": "road.arterial",
+            "elementType": "labels.text.fill",
+            "stylers": [
+              {
+                "color": "#fa0530"
+              }
+            ]
+          },
+          {
+            "featureType": "road.arterial",
+            "elementType": "labels.text.stroke",
+            "stylers": [
+              {
+                "color": "#22ddca"
+              }
+            ]
+          },
+          {
+            "featureType": "road.highway",
+            "elementType": "geometry.fill",
+            "stylers": [
+              {
+                "color": "#00ffff"
+              },
+              {
+                "weight": 3.5
+              }
+            ]
+          },
+          {
+            "featureType": "road.highway",
+            "elementType": "geometry.stroke",
+            "stylers": [
+              {
+                "color": "#5533cc"
+              },
+              {
+                "visibility": "on"
+              },
+              {
+                "weight": 2.5
+              }
+            ]
+          },
+          {
+            "featureType": "road.highway",
+            "elementType": "labels.text",
+            "stylers": [
+              {
+                "visibility": "on"
+              }
+            ]
+          },
+          {
+            "featureType": "road.highway",
+            "elementType": "labels.text.fill",
+            "stylers": [
+              {
+                "color": "#80ffff"
+              },
+              {
+                "weight": 0.5
+              }
+            ]
+          },
+          {
+            "featureType": "road.highway",
+            "elementType": "labels.text.stroke",
+            "stylers": [
+              {
+                "color": "#7511ee"
+              },
+              {
+                "visibility": "on"
+              },
+              {
+                "weight": 4
+              }
+            ]
+          }
+        ]
+    }
+    
     //return a custom icon
     function getIconPath(){
         var image = {
@@ -87,6 +228,14 @@ angular.module('starter.services')
     /* setup the google map */
     this.initMap = function(_scope,position){
         
+        if(!google){
+            alert('Google dont load!')
+        }
+        
+        if(!google.maps){
+            alert('Google maps dont load!')
+        }
+        
         //get initial coordinates
         var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
         
@@ -102,7 +251,8 @@ angular.module('starter.services')
             draggable: true,
             zoomControl: true,
             scrollwheel: false, 
-            disableDoubleClickZoom: true
+            disableDoubleClickZoom: true,
+            styles: getCustomMapStyle()
         };
  
         //the map

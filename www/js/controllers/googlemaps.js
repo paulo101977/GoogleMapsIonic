@@ -1,27 +1,52 @@
 angular.module('starter.controllers')
 .controller('GoogleMapsCtrl', 
 //inject any instance
-['$rootScope' , '$scope' , 'GoogleMapService' , 'ModalService' ,  '$cordovaGeolocation',
-function($rootScope , $scope , GoogleMapService , ModalService , $cordovaGeolocation) {
+['$rootScope' , '$scope' , 'GoogleMapService' , 'ModalService' ,  '$cordovaGeolocation', '$timeout',
+function($rootScope , $scope , GoogleMapService , ModalService , $cordovaGeolocation , $timeout) {
     
     //create a instance of modal
     ModalService.appendModal($scope);
     
     //setup the geolocation
-    var options = {timeout: 10000, enableHighAccuracy: true};
+    var options = {
+        maximumAge: 30000,
+        timeout: 15000,
+        enableHighAccuracy: false 
+    };
     
     //there are nothing to be saved
     $scope.couldSave = false;
                                    
     //get the initial position
-    $cordovaGeolocation.getCurrentPosition(options)
+    /*$cordovaGeolocation.getCurrentPosition(options)
     .then(function(position){
         GoogleMapService.initMap($scope , position);
         GoogleMapService.addInitialMarker($scope);
         $scope.couldSave = true; //if could or not save (modal and other purpose)
     }, function(error){
-        $scope.openModal("Por favor, verifique sua internet!");
-    });
+        $scope.openModal("Por favor, verifique sua internet!<br>" + error.code + "<br>" + error.message);
+        
+        //lat: 40.674, lng: -73.945
+        //fake, plugin fail
+        var position = {
+            coords: {latitude: 40.674 , longitude: -73.945}
+        }
+        
+        GoogleMapService.initMap($scope , position);
+        GoogleMapService.addInitialMarker($scope);
+    });*/
+    
+    //lat: 40.674, lng: -73.945
+        //fake, plugin fail
+        var position = {
+            coords: {latitude: 40.674 , longitude: -73.945}
+        }
+        
+        $timeout(function(){
+            GoogleMapService.initMap($scope , position);
+            GoogleMapService.addInitialMarker($scope);
+        })
+        
                                
 
     $scope.openModal = function(message) {
